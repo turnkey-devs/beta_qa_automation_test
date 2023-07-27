@@ -10,7 +10,7 @@ describe('New Investors Register', () => {
 
   beforeEach(() => {
     cy.viewport(1280, 720);
-    cy.visit(Cypress.env('STAGING_URL'));
+    cy.visit(Cypress.env('BETA_URL'));
     cy.wait(10000);
   });
 
@@ -138,11 +138,11 @@ describe('New Investors Register', () => {
             cy.get('h1').contains('Pending Verification').should('be.visible');
             cy.url().should('include', '/verify-pending');
 
-            // Buka login admin staging untuk approval verification
+            // Buka login admin beta untuk approval verification
             approvalAdminFunction.approvalIdentity(numberID);
 
-            // Buka primecodex staging kembali dan login
-            cy.visit(Cypress.env('STAGING_URL'));
+            // Buka primecodex beta kembali dan login
+            cy.visit(Cypress.env('BETA_URL'));
             cy.wait(3000);
             loginFunction.loginCorrect(email, pass);
 
@@ -364,8 +364,8 @@ describe('New Investors Register', () => {
             // Approve request POA dari admin
             approvalAdminFunction.approvalPOA();
 
-            // Buka primecodex staging kembali dan login
-            cy.visit(Cypress.env('STAGING_URL'));
+            // Buka primecodex beta kembali dan login
+            cy.visit(Cypress.env('BETA_URL'));
             cy.wait(3000);
             loginFunction.loginCorrect(email, pass);
 

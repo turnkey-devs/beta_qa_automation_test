@@ -10,11 +10,11 @@ describe('Deposit Balance', () => {
 
   beforeEach(() => {
     cy.viewport(1280, 720);
-    cy.visit(Cypress.env('STAGING_URL'));
+    cy.visit(Cypress.env('BETA_URL'));
     cy.wait(10000);
   });
 
-  context.skip('Deposit Via Bank & VA', () => {
+  context('Deposit Via Bank & VA', () => {
     it('Users want to deposit to their account without input all field or some field', () => {
       // Login
       loginFunction.loginCorrect(email, pass);
@@ -95,7 +95,7 @@ describe('Deposit Balance', () => {
       cy.get('a[href="/dashboard"]').contains('Account').click();
       cy.wait(5000);
 
-      // Check status verified identity dan klik cancel
+      // Check status dan klik cancel
       cy.get('h1').contains('History Payment').scrollIntoView();
       cy.get(5000);
       cy.get('thead').then(($el) => {
@@ -112,7 +112,7 @@ describe('Deposit Balance', () => {
       cy.wait(4000);
       cy.get('h2').contains('Success').should('be.visible');
       cy.get('button').contains('OK').click();
-      cy.wait(4000);
+      cy.wait(10000);
       cy.get('table > tr').eq(0).find('td').contains('CANCELED').should('be.visible');
     });
 

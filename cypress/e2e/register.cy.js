@@ -5,7 +5,7 @@ const commonFunction = new commonObject();
 describe('New Investors Register', () => {
   beforeEach(() => {
     cy.viewport(1280, 720);
-    cy.visit(Cypress.env('STAGING_URL'));
+    cy.visit(Cypress.env('BETA_URL'));
     cy.wait(3000);
     cy.get('a').contains('Daftar').invoke('removeAttr', 'target').click();
     cy.wait(10000);

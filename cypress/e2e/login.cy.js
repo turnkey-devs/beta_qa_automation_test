@@ -1,7 +1,7 @@
 describe('New Investors Login', () => {
   beforeEach(() => {
     cy.viewport(1280, 720);
-    cy.visit(Cypress.env('STAGING_URL'));
+    cy.visit(Cypress.env('BETA_URL'));
     cy.wait(3000);
   });
 
