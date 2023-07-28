@@ -110,7 +110,7 @@ describe('New Investors Register', () => {
     cy.get('div').contains('Invalid Email').click();
   });
 
-  it.only('Users want to input password without following password rules', () => {
+  it('Users want to input password without following password rules', () => {
     // Input full name
     let randCharacters = commonFunction.randomChar();
     cy.get('input[id="form-id-fullName"]').type(randCharacters).should('have.value', randCharacters);
