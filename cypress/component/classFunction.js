@@ -72,7 +72,7 @@ export class commonObject {
   randomPass() {
     const randChar = 'abcdefghijklmnopqrstuvwxyz1234567890';
     let empySpace = '';
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       empySpace += randChar[Math.floor(Math.random() * randChar.length)];
     }
 
@@ -220,7 +220,7 @@ export class approvalAdmin {
     cy.wait(2000);
     cy.get('h2').contains('Are your sure?').should('be.visible');
     cy.get('button').contains('Yes').click();
-    cy.wait(5000);
+    cy.wait(10000);
     cy.get('h2').contains('SUCCESS!').should('be.visible');
     cy.get('button').contains('OK').click();
     cy.get(3000);
@@ -248,7 +248,7 @@ export class approvalAdmin {
     cy.wait(2000);
     cy.get('h2').contains('Are your sure?').should('be.visible');
     cy.get('button').contains('Yes').click();
-    cy.wait(5000);
+    cy.wait(10000);
     cy.get('h2').contains('SUCCESS!').should('be.visible');
     cy.get('button').contains('OK').click();
     cy.get(3000);
