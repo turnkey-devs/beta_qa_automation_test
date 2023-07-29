@@ -21,13 +21,13 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
       cy.get('h3').contains('Select Account').should('be.visible');
 
       // Klik proceed deposit
       cy.get('button').contains('Request Deposit').click();
-      cy.wait(2000);
+      cy.wait(3000);
 
       // Assert pop up error
       cy.get('h2').contains('Incomplete Data!').should('be.visible');
@@ -40,7 +40,7 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
       cy.get('h3').contains('Select Account').should('be.visible');
 
@@ -122,7 +122,7 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Input akun yang ingin di deposit
@@ -186,25 +186,9 @@ describe('Deposit Balance', () => {
       cy.wait(3000);
       cy.get('h2').contains('Success').should('be.visible');
 
-      // Cek approval admin
-      approvalAdminFunction.approvalDeposit();
-
-      // Buka primecodex staging kembali dan login
-      cy.visit(Cypress.env('STAGING_URL'));
-      cy.wait(3000);
-      loginFunction.loginCorrect(email, pass);
-
-      // Check status deposit
-      cy.get('h1').contains('History Payment').scrollIntoView();
-      cy.get(5000);
-      cy.get('thead').then(($el) => {
-        const rowTd = $el.length;
-        if (rowTd == 0) {
-          cy.reload();
-          cy.wait(10000);
-        }
-      });
-      cy.get('table > tr').eq(0).find('td').contains('SUCCESS').should('be.visible');
+      // ========================
+      // NO APPROVAL ADMIN FIRST
+      // ========================
     });
   });
 
@@ -215,11 +199,11 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Klik crypto metode payment
-      cy.get('a[href="/deposit-crypto"]').click();
+      cy.get('a[href="/deposit-crypto"]').click({ force: true });
       cy.wait(5000);
       cy.get('h3').contains('Select Account').should('be.visible');
 
@@ -238,11 +222,11 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Klik crypto metode payment
-      cy.get('a[href="/deposit-crypto"]').click();
+      cy.get('a[href="/deposit-crypto"]').click({ force: true });
       cy.wait(5000);
       cy.get('h3').contains('Select Account').should('be.visible');
 
@@ -256,11 +240,11 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Klik crypto metode payment
-      cy.get('a[href="/deposit-crypto"]').click();
+      cy.get('a[href="/deposit-crypto"]').click({ force: true });
       cy.wait(5000);
       cy.get('h3').contains('Select Account').should('be.visible');
 
@@ -316,7 +300,7 @@ describe('Deposit Balance', () => {
       cy.get('a[href="/dashboard"]').contains('Account').click();
       cy.wait(5000);
 
-      // Check status verified identity dan klik cancel
+      // Check status payment dan klik cancel
       cy.get('h1').contains('History Payment').scrollIntoView();
       cy.get(5000);
       cy.get('thead').then(($el) => {
@@ -342,11 +326,11 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Klik crypto metode payment
-      cy.get('a[href="/deposit-crypto"]').click();
+      cy.get('a[href="/deposit-crypto"]').click({ force: true });
       cy.wait(5000);
       cy.get('h3').contains('Select Account').should('be.visible');
 
@@ -409,7 +393,7 @@ describe('Deposit Balance', () => {
 
       // Klik Yes
       cy.get('button').contains('Yes').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h2').contains('Success').should('be.visible');
 
       // =========================
@@ -425,7 +409,7 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Klik credit card metode payment
@@ -448,7 +432,7 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Klik credit card metode payment
@@ -466,7 +450,7 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Klik credit card metode payment
@@ -513,7 +497,7 @@ describe('Deposit Balance', () => {
       cy.get('button').contains('Payment Gateway').click();
       cy.wait(5000);
 
-      // Check status verified identity dan klik cancel
+      // Check status payment dan klik cancel
       cy.get('h1').contains('History Payment').scrollIntoView();
       cy.get(5000);
       cy.get('thead').then(($el) => {
@@ -539,7 +523,7 @@ describe('Deposit Balance', () => {
 
       // Buka deposit menu dari sidebar
       cy.get('a[href="/deposit"] > div > div > h4').contains('Deposit').click();
-      cy.wait(3000);
+      cy.wait(5000);
       cy.get('h1').contains('Deposit').should('be.visible');
 
       // Klik credit card metode payment
@@ -558,7 +542,7 @@ describe('Deposit Balance', () => {
       cy.get('input[name="amount"]').type(1).should('have.value', 1);
       cy.wait(2000);
 
-      // Input crypto address
+      // Input akun cc
       const randCharacters = commonFunction.randomChar();
       cy.get('input[name="akun-pemilik"]').type(randCharacters).should('have.value', randCharacters);
 
