@@ -4,7 +4,7 @@ const loginFunction = new loginFunc();
 const commonFunction = new commonObject();
 const approvalAdminFunction = new approvalAdmin();
 
-describe('New Investors Register', () => {
+describe('Verifications', () => {
   const email = Cypress.env('EMAIL_VALID');
   const pass = Cypress.env('PASS_VALID');
 
