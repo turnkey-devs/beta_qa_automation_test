@@ -17,10 +17,7 @@ export class loginFunc {
 export class commonObject {
   randomDropdownValue(selectPath, element) {
     // Logika untuk random value dropdown
-    let randNumber = Math.floor(Math.random() * element.length);
-    if (randNumber == 0) {
-      randNumber = 1;
-    }
+    const randNumber = Math.floor(Math.random() * element.length);
 
     // Pilih items dropdown
     const valueDrop = element[randNumber].text;
@@ -100,9 +97,9 @@ export class commonObject {
         const textBalance = $txt.text().split(' ');
         const textBalanceNumber = parseFloat(textBalance[textBalance.length - 1]);
 
-        if (textBalanceNumber == 0) {
+        if (textBalanceNumber == 0 || textBalanceNumber <= 1) {
           //  Input akun yang ingin di withdraw kembali
-          cy.get('select[name="select-account"] > option').then(($el) => {
+          cy.get('select[name="select-account"] > option[name="select-account"]').then(($el) => {
             this.randomDropdownValue('select[name="select-account"]', $el);
           });
           cy.wait(2000);
@@ -255,5 +252,73 @@ export class approvalAdmin {
 
     // Logout admin
     this.logoutAdmin();
+  }
+}
+
+export class ApproveAdminFromAPI {
+  approvePayment(paymentID, lastBalance) {
+    const pemKey = Cypress.env('PEM_KEY');
+    const baseURL = Cypress.env('BASE_API_BETA');
+
+    const bodyLogin = {
+      email: Cypress.env('EMAIL_ADMIN'),
+      password: Cypress.env('PASS_ADMIN'),
+    };
+
+    const bodyApprovePayment = {
+      account_last_balance: lastBalance,
+      amount: 1,
+      comment: 'TestAPIHitAutomation',
+      status: 'SUCCESS',
+    };
+
+    const bodyAppToken = {
+      appId: '24',
+      name: 'Codex-Greylabel',
+      broker: {},
+      link: {},
+    };
+
+    cy.request({
+      method: 'POST',
+      url: `${Cypress.env('BASE_API_STAGING')}/api/v2/admin/app-token`,
+      headers: {
+        'x-pem-key': pemKey,
+      },
+      failOnStatusCode: false,
+      body: bodyAppToken,
+    }).then(($resToken) => {
+      cy.log($resToken);
+      const appToken = $resToken.body.data.token;
+
+      cy.request({
+        method: 'POST',
+        url: `${baseURL}/api/v2/auth/admin/login`,
+        headers: {
+          'X-App-Token': appToken,
+          Accept: 'application/json',
+        },
+        failOnStatusCode: false,
+        body: bodyLogin,
+      }).then(($res) => {
+        const userToken = $res.body.data.token;
+
+        // Request untuk approve ticket
+        cy.request({
+          method: 'PUT',
+          url: `${baseURL}/api/v2/payment/${paymentID}/status`,
+          headers: {
+            'X-App-Token': appToken,
+            'X-User-Token': userToken,
+          },
+          failOnStatusCode: false,
+          body: bodyApprovePayment,
+        }).then(($resAppr) => {
+          const statusMessage = $resAppr.body.data.payment.status;
+
+          expect(statusMessage).to.equal('SUCCESS');
+        });
+      });
+    });
   }
 }
