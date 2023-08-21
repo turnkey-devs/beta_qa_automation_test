@@ -36,7 +36,7 @@ jobs:
         with:
           build: npm install
           browser: chrome
-          command: npx cypress run --env BETA_URL=${{env.BETA_URL}},BETA_ADMIN_URL=${{env.BETA_ADMIN_URL}},EMAIL_VALID=${{env.EMAIL_VALID}},PASS_VALID=${{env.PASS_VALID}},EMAIL_NOT_VALID=${{env.EMAIL_NOT_VALID}},EMAIL_NOT_REGISTER=${{env.EMAIL_NOT_REGISTER}},PASS_NOT_VALID=${{env.PASS_NOT_VALID}},EMAIL_ADMIN=${{env.EMAIL_ADMIN}},PASS_ADMIN=${{env.PASS_ADMIN}},BASE_API_BETA=${{env.BASE_API_BETA}},BASE_API_STAGING=${{env.BASE_API_STAGING}},PEM_KEY=${{env.PEM_KEY}},
+          command: npx cypress run --env BETA_URL=${{env.BETA_URL}},BETA_ADMIN_URL=${{env.BETA_ADMIN_URL}},EMAIL_VALID=${{env.EMAIL_VALID}},PASS_VALID=${{env.PASS_VALID}},EMAIL_NOT_VALID=${{env.EMAIL_NOT_VALID}},EMAIL_NOT_REGISTER=${{env.EMAIL_NOT_REGISTER}},PASS_NOT_VALID=${{env.PASS_NOT_VALID}},EMAIL_ADMIN=${{env.EMAIL_ADMIN}},PASS_ADMIN=${{env.PASS_ADMIN}},BASE_API_BETA=${{env.BASE_API_BETA}},BASE_API_STAGING=${{env.BASE_API_STAGING}},PEM_KEY=${{env.PEM_KEY}}
 
       - name: Copy test execution videos
         if: always()
