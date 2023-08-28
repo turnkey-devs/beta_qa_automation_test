@@ -605,3 +605,80 @@ export class WithdrawLocal {
     cy.get('button').contains('OK').click();
   }
 }
+
+export class RegistHandleAPIFromAdmin {
+  deleteRegistAccountUser(accountID, userID) {
+    const endpointAccountDelete = `${Cypress.env('BASE_API_BETA')}/api/v2/account/${accountID}`;
+    const endpointUserDelete = `${Cypress.env('BASE_API_BETA')}/api/v2/user/${userID}`;
+
+    const bodyLogin = {
+      email: Cypress.env('EMAIL_ADMIN'),
+      password: Cypress.env('PASS_ADMIN'),
+    };
+
+    const bodyAppToken = {
+      appId: '24',
+      name: 'Codex-Greylabel',
+      broker: {},
+      link: {},
+    };
+
+    cy.request({
+      method: 'POST',
+      url: `${Cypress.env('BASE_API_STAGING')}/api/v2/admin/app-token`,
+      headers: {
+        'x-pem-key': Cypress.env('PEM_KEY'),
+      },
+      failOnStatusCode: false,
+      body: bodyAppToken,
+    }).then(($resToken) => {
+      cy.log($resToken);
+      const appToken = $resToken.body.data.token;
+
+      cy.request({
+        method: 'POST',
+        url: `${Cypress.env('BASE_API_BETA')}/api/v2/auth/admin/login`,
+        headers: {
+          'X-App-Token': appToken,
+          Accept: 'application/json',
+        },
+        failOnStatusCode: false,
+        body: bodyLogin,
+      }).then(($res) => {
+        const userToken = $res.body.data.token;
+
+        // API Delete New Account
+        cy.request({
+          method: 'DELETE',
+          url: endpointAccountDelete,
+          headers: {
+            'X-App-Token': appToken,
+            'X-User-Token': userToken,
+          },
+          failOnStatusCode: false,
+        }).then(($resDelAcc) => {
+          cy.log($resDelAcc);
+          const statusMessage = $resDelAcc.body.status;
+
+          expect(statusMessage).to.equal('SUCCESS');
+        });
+
+        // API Delete New User
+        cy.request({
+          method: 'DELETE',
+          url: endpointUserDelete,
+          headers: {
+            'X-App-Token': appToken,
+            'X-User-Token': userToken,
+          },
+          failOnStatusCode: false,
+        }).then(($resDelUsr) => {
+          cy.log($resDelUsr);
+          const statusMessage = $resDelUsr.body.status;
+
+          expect(statusMessage).to.equal('SUCCESS');
+        });
+      });
+    });
+  }
+}
